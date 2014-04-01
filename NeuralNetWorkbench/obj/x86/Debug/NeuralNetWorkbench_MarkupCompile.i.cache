@@ -1,0 +1,20 @@
+﻿NeuralNetWorkbench
+
+
+winexe
+C#
+.cs
+C:\Users\mclaassen\Documents\Visual Studio 2010\Projects\NeuralNetWorkbench\NeuralNetWorkbench\obj\x86\Debug\
+NeuralNetWorkbench
+none
+false
+DEBUG;TRACE
+C:\Users\mclaassen\Documents\Visual Studio 2010\Projects\NeuralNetWorkbench\NeuralNetWorkbench\App.xaml
+11509887055
+
+41-827221036
+161772895632
+Controls\ConvolutionalLayerControl.xaml;Controls\FullyConnectedLayerControl.xaml;Controls\InputLayerControl.xaml;Controls\OutputLayerControl.xaml;Resources\IconsResourceDictionary.xaml;Resources\ImplicitStylesResourceDictionary.xaml;Resources\StylesResourceDictionary.xaml;Views\Tabs\BuildTab.xaml;Views\MainWindow.xaml;Views\Tabs\TestTab.xaml;Views\Tabs\TrainTab.xaml;
+
+False
+

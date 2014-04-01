@@ -1,0 +1,42 @@
+﻿<Window x:Class="NeuralNetWorkbench.Views.MainWindow"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        xmlns:framework="clr-namespace:NeuralNetWorkbench.Framework"
+		xmlns:viewModels="clr-namespace:NeuralNetWorkbench.ViewModels"
+        xmlns:views="clr-namespace:NeuralNetWorkbench.Views"
+        xmlns:tabs="clr-namespace:NeuralNetWorkbench.Views.Tabs"
+        xmlns:converters="clr-namespace:NeuralNetWorkbench.Converters"
+        Title="Neural Network Workbench"
+        WindowStartupLocation="CenterScreen"
+        Height="659"
+        Width="1200">
+
+    <Window.DataContext>
+        <viewModels:MainWindowViewModel />
+    </Window.DataContext>
+    
+    <Window.Resources>
+        <DataTemplate x:Key="BuildTemplate" DataType="x:Type viewModels:BuildTabViewModel">
+            <tabs:BuildTab/>
+        </DataTemplate>
+        <DataTemplate x:Key="TrainTemplate" DataType="x:Type viewModels:TrainTabViewModel">
+            <tabs:TrainTab/>
+        </DataTemplate>
+        <DataTemplate x:Key="TestTemplate" DataType="x:Type viewModels:TestTabViewModel">
+            <tabs:TestTab/>
+        </DataTemplate>
+        <framework:TemplateSelector x:Key="TemplateSelector" BuildTemplate="{StaticResource BuildTemplate}" TrainTemplate="{StaticResource TrainTemplate}" TestTemplate="{StaticResource TestTemplate}"/>
+    </Window.Resources>
+    
+    <TabControl x:Name="MainTabs" ItemsSource="{Binding Tabs}" ContentTemplateSelector="{StaticResource TemplateSelector}">
+        <TabControl.ItemTemplate>
+            <DataTemplate>
+                <TextBlock Text="{Binding Title}"/>
+            </DataTemplate>
+        </TabControl.ItemTemplate>
+    </TabControl>
+    
+</Window>

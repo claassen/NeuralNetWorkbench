@@ -1,0 +1,186 @@
+﻿<UserControl x:Class="NeuralNetWorkbench.Views.Tabs.TrainTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:converters="clr-namespace:NeuralNetWorkbench.Converters"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <converters:BooleanToPauseButtonTextConverter x:Key="BooleanToPauseButtonTextConverter"/>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="{x:Type Label}">
+                <Setter Property="Margin" Value="2"/>
+            </Style>
+            <Style TargetType="{x:Type TextBox}">
+                <Setter Property="Margin" Value="2"/>
+            </Style>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="Margin" Value="2"/>
+            </Style>
+            <Style TargetType="{x:Type ComboBox}">
+                <Setter Property="Margin" Value="2"/>
+            </Style>
+            <Style TargetType="{x:Type CheckBox}">
+                <Setter Property="Margin" Value="2"/>
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="Width" Value="140"/>
+                        </Style>
+                        <Style TargetType="{x:Type TextBox}">
+                            <Setter Property="Width" Value="70"/>
+                            <Setter Property="TextAlignment" Value="Right"/>
+                        </Style>
+                        <Style TargetType="{x:Type StackPanel}">
+                            <Setter Property="Margin" Value="2"/>
+                        </Style>
+                        <Style TargetType="{x:Type CheckBox}">
+                            <Setter Property="Margin" Value="4"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <GroupBox Header="Training Parameters" Margin="0, 0, 2, 0">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Learning rate"/>
+                                <TextBox Text="{Binding LearningRate}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Max Iterations"/>
+                                <TextBox Text="{Binding MaxIterations}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Early Stop Threshold"/>
+                                <TextBox Text="{Binding EarlyStopThreshold}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Header="Training Method" Margin="0, 0, 2, 0">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <RadioButton GroupName="TrainingMethod" Content="Stochastic Gradient Descent" IsChecked="{Binding IsSGD}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" IsEnabled="{Binding IsSGD}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Momentum"/>
+                                    <TextBox Text="{Binding Momentum}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="Weight decay"/>
+                                    <TextBox Text="{Binding WeightDecay}"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <RadioButton GroupName="TrainingMethod" Content="rmsprop" IsChecked="{Binding IsRmsProp}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" IsEnabled="{Binding IsRmsProp}">
+                                
+                            </StackPanel>
+                            
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox Content="Mini-batch Mode" IsChecked="{Binding UseMiniBatchMode}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" IsEnabled="{Binding UseMiniBatchMode}">
+                                <Label Content="Mini-batch Size"/>
+                                <TextBox Text="{Binding MiniBatchSize}"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Width="50" Content="Start" Command="{Binding StartTrainingCommand}"/>
+                                <Button Width="50" Content="Stop" Command="{Binding StopTrainingCommand}"/>
+                                <Button Width="50" Content="{Binding IsPaused, Converter={StaticResource BooleanToPauseButtonTextConverter}}" Command="{Binding PauseTrainingCommand}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+
+                </StackPanel>
+            </Grid>
+
+            <GroupBox Header="Details" Grid.Column="1" Margin="0, 0, 2, 0">
+                <Grid>
+                    <!--<Grid.Resources>
+                        <Style TargetType="{x:Type Label}">
+                            <Setter Property="Width" Value="150"/>
+                        </Style>
+                        <Style TargetType="{x:Type TextBox}">
+                            <Setter Property="Width" Value="30"/>
+                            <Setter Property="Margin" Value="0, 2, 2, 2"/>
+                            <Setter Property="TextAlignment" Value="Right"/>
+                        </Style>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <Setter Property="Margin" Value="0, 2, 2, 2"/>
+                        </Style>
+                    </Grid.Resources>-->
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal">
+                        <Label Content="Show the last"/>
+                        <ComboBox Height="22" SelectedItem="{Binding GraphHistoryLength}" SelectedIndex="2">
+                            <ComboBox.ItemsSource>
+                                <x:Array Type="{x:Type sys:Int32}">
+                                    <sys:Int32>50</sys:Int32>
+                                    <sys:Int32>100</sys:Int32>
+                                    <sys:Int32>200</sys:Int32>
+                                    <sys:Int32>500</sys:Int32>
+                                    <sys:Int32>1000</sys:Int32>
+                                    <sys:Int32>2000</sys:Int32>
+                                    <sys:Int32>5000</sys:Int32>
+                                    <sys:Int32>10000</sys:Int32>
+                                    <sys:Int32>100000</sys:Int32>
+                                </x:Array>
+                            </ComboBox.ItemsSource>
+                        </ComboBox>
+                        <Label Content="data points"/>
+                    </StackPanel>
+                    <vc:Chart Grid.Row="1"
+                              xmlns:vc="clr-namespace:Visifire.Charts;assembly=WPFVisifire.Charts" 
+                              ScrollingEnabled="False" 
+                              AnimationEnabled="False"
+                              ZoomingEnabled="True"
+                              ZoomingMode="MouseWheel"
+                              PanningMode="ScrollBarAndMouseDrag">
+                        <vc:Chart.Titles>
+                            <vc:Title Text="Training Error"></vc:Title>
+                        </vc:Chart.Titles>
+                        <vc:Chart.AxesX>
+                            <vc:Axis Title="Epoch"></vc:Axis>
+                        </vc:Chart.AxesX>
+                        <vc:Chart.AxesY>
+                            <vc:Axis Title="Error" AxisMaximum="1" AxisMinimum="0"></vc:Axis>
+                        </vc:Chart.AxesY>
+                        <vc:Chart.Series>
+                            <vc:DataSeries RenderAs="QuickLine" DataSource="{Binding ErrorData}" LightWeight="True">
+                                <vc:DataSeries.DataMappings>
+                                    <vc:DataMapping MemberName="XValue" Path="Key"></vc:DataMapping>
+                                    <vc:DataMapping MemberName="YValue" Path="Value"></vc:DataMapping>
+                                </vc:DataSeries.DataMappings>
+                            </vc:DataSeries>
+                        </vc:Chart.Series>
+                    </vc:Chart>
+                </Grid>
+            </GroupBox>
+        </Grid>
+        <ProgressBar Grid.Row="1" Height="20" Value="{Binding TrainingProgress}" Visibility="{Binding TrainingInProgress, Converter={StaticResource BooleanToVisibilityConverter}}"></ProgressBar>
+    </Grid>
+</UserControl>
